@@ -22,6 +22,8 @@
         <div id="prev" class="btn"><i class="fa-solid fa-arrow-left"></i></div>
         <div id="month-year"></div>
         <div id="next" class="btn"><i class="fa-solid fa-arrow-right"></i></div>
+        <div id="close" class="btn"><i class="fa-solid fa-xmark"></i></div>
+
         </div>
         <div class="weekdays">
         
@@ -36,17 +38,33 @@
         <div class="days" id="days"></div>
     </div>
 
-
-    <button id="show-calendar-btn">
-        <span class="material-symbols-outlined">event</span>
-    </button>
-
     
     <div class="container">
         <div class="title">
             <h1>Todo App</h1>
         </div>
     </div>
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+
+    <div class="sidebar" id="sidebar">
+        <div class="menu-item" id="calendar-btn">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png" alt="calendar icon" />
+          <span>Calendar</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/book.png" alt="book icon" />
+          <span>Deep Focus</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://img.icons8.com/?size=100&id=HiC7xMlM0VYI&format=png&color=FFFFFF" alt="chatbot icon" />
+          <span>Chatbot</span>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+
 
     <div class="button-container">
         

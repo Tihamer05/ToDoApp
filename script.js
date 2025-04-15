@@ -203,11 +203,32 @@ function BuildTheDom(state) {
     
 }
 
-const calendarBtn = document.getElementById('show-calendar-btn');
+const calendarBtn = document.getElementById('calendar-btn');
 const calendarContainer = document.getElementById('calendar');
+const menu = document.getElementById("sidebar");
+const overlay = document.querySelector('.overlay');
+
 
 calendarBtn.addEventListener('click', function () {
-    calendarContainer.style.display = (calendarContainer.style.display === 'none' || !calendarContainer.style.display) ? 'block' : 'none';
+
+    calendarContainer.style.display = 'block';
+    menu.classList.remove('active');
+
+    overlay.classList.remove('active');
+});
+
+
+function toggleSidebar() {
+    menu.classList.toggle("active");
+    overlay.classList.toggle("active");
+    calendarContainer.style.display = 'none';
+}
+
+
+overlay.addEventListener('click', () => {
+    menu.classList.remove('active');
+    calendarContainer.style.display = 'none';
+    overlay.classList.remove('active');
 });
 
 
@@ -215,6 +236,7 @@ const monthYear = document.getElementById('month-year');
 const daysContainer = document.getElementById('days');
 const prevButton = document.getElementById('prev');
 const nextButton = document.getElementById('next');
+const closeButton = document.getElementById('close');
 const months = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
@@ -235,6 +257,10 @@ document.addEventListener('DOMContentLoaded', function () {
     nextButton.addEventListener('click', function () {
         currentDate.setMonth(currentDate.getMonth() + 1);
         renderCalendar(currentDate);
+    });
+
+    closeButton.addEventListener('click', ()=>{
+        calendarContainer.style.display = 'none';
     });
 
     renderCalendar(currentDate);
@@ -527,6 +553,8 @@ fileInput.addEventListener('change', () =>{
     reader.readAsText(fileInput.files[0]);
     fileInput.value = '';
 })
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     loadStateFromHardDisk();
