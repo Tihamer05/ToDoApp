@@ -4,14 +4,22 @@ const sendMessageBtn = document.querySelector('#send-message');
 const chatPopup = document.querySelector('.chatbot-popup');
 const chatPopUpBtn = document.querySelector('#chat-btn');
 const closeBot = document.querySelector('#close-chatbot');
-
+const fileInput1 = document.querySelector('#file-input1');
+const fileUpploadWrapper = document.querySelector('.file-upload-wrapper');
+const fileCancelButton = document.querySelector('#file-cancel');
 
 const API_KEY = 'AIzaSyBGH_BgY6KuO7tpRI2AIhz4Y642EF6xcUY';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
 const userData = {
     message: null,
+    file: {
+        data: null,
+        mime_type: null
+    }
 }
+
+const chatHistory = [];
 
 const creatMessageElement = (content, ...classes) => {
     const div = document.createElement('div');
@@ -22,13 +30,16 @@ const creatMessageElement = (content, ...classes) => {
 
 const generateBotResponse = async (incomingMessageDiv) => {
     const messageElement = incomingMessageDiv.querySelector('.message-text');
+    chatHistory.push({
+        role: 'user',
+        parts: [{text: userData.message}, ...(userData.file.data ? [{inline_data: userData.file}] : [])]
+    });
+
     const requestOptions = {
         method:  'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            contents: [{
-                parts: [{text: userData.message}]
-            }]    
+            contents: chatHistory    
         })
         
     }
@@ -41,11 +52,17 @@ const generateBotResponse = async (incomingMessageDiv) => {
         }
         const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g,'$1').trim();
         messageElement.innerText = apiResponseText;
+
+        chatHistory.push({
+            role: 'model',
+            parts: [{ text: apiResponseText}]
+        });
     }catch (error){
         console.log(error);
         messageElement.innerText = 'Something went wrong! Please try again later!';
         messageElement.style.color = '#880808';
     }finally{
+        userData.file = {};
         incomingMessageDiv.classList.remove('thinking');
         chatBody.scrollTo({top: chatBody.scrollHeight, behavior: 'smooth' });
     }
@@ -56,8 +73,11 @@ const handleOutgoingMessage = (e) =>{
 
     userData.message = messageInput.value.trim();
     messageInput.value = '';
+    fileUpploadWrapper.classList.remove('file-uploaded');
 
-    const messageContent = `<div class="message-text">${userData.message}</div>`;
+    const messageContent = `<div class="message-text"></div>
+                            ${userData.file.data ? `<img src='data:${userData.file.mime_type};base64, ${userData.file.data}' class='attachment'/>`: ''}`;
+
     const outgoingMessageDiv = creatMessageElement(messageContent, 'user-message');
     outgoingMessageDiv.querySelector('.message-text').innerHTML = userData.message;
     chatBody.appendChild(outgoingMessageDiv);
@@ -76,9 +96,13 @@ const handleOutgoingMessage = (e) =>{
             </div>
         </div>`;
         
-        chatBody.scrollTo({top: chatBody.scrollHeight, behavior: 'smooth' });
         const incomingMessageDiv = creatMessageElement(messageContent, 'bot-message', 'thinking');
         chatBody.appendChild(incomingMessageDiv);
+
+        requestAnimationFrame(() => {
+            chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
+        });
+
         generateBotResponse(incomingMessageDiv);
     }, 600);
 }
@@ -86,29 +110,91 @@ const handleOutgoingMessage = (e) =>{
 messageInput.addEventListener('keydown', (e) =>{
     const userMessage = e.target.value.trim();
     if(e.key === 'Enter' && userMessage){
+        document.body.classList.remove('show-emoji-picker');
         handleOutgoingMessage(e);
     }
 })
 
-sendMessageBtn.addEventListener('click', (e) => handleOutgoingMessage(e))
+
+
+function closeChatbot() {
+    chatPopup.classList.add('hidden');
+    setTimeout(() => {
+        chatPopup.style.display = 'none';
+    }, 400);
+    overlayMedia.style.display = 'none';
+    overlayMedia.classList.remove('active');
+}
+
 
 chatPopUpBtn.addEventListener('click', () =>{
     chatPopup.style.display = chatPopup.style.display === 'block' ? 'none' : 'block';
     
+    overlayMedia.classList.add('active');
+    overlayMedia.style.display = 'block';
+
     setTimeout(() => {
         chatPopup.classList.remove('hidden');
+        if(chatPopup.style.display === 'none'){
+            overlayMedia.classList.remove('active');
+        }
     }, 10);
 
     menu.classList.remove('active');
     overlay.classList.remove('active');
     
-});
-
-closeBot.addEventListener('click', () =>{
-    chatPopup.classList.add('hidden');
-    setTimeout(() => {
-        chatPopup.style.display = 'none';
-    }, 400);
     
 });
+
+closeBot.addEventListener('click', closeChatbot);
+
+fileInput1.addEventListener('change', () => {
+    const file = fileInput1.files[0];
+    if(!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        fileUpploadWrapper.querySelector('img').src = e.target.result;
+        fileUpploadWrapper.classList.add('file-uploaded');
+        const base64String = e.target.result.split(',')[1];
+
+        userData.file = {
+            data: base64String,
+            mime_type: file.type
+        }
+
+        fileInput1.value = '';
+    }
+
+    reader.readAsDataURL(file);
+});
+
+fileCancelButton.addEventListener('click', () => {
+    userData.file = {};
+    fileUpploadWrapper.classList.remove('file-uploaded');
+});
+
+const picker = new EmojiMart.Picker({
+    theme: 'dark',
+    skinTonePosition: 'none',
+    previwPosition: 'none',
+    onEmojiSelect: (emoji) =>{
+        const {selectionStart: start, selectionEnd: end} = messageInput;
+        messageInput.setRangeText(emoji.native, start, end, 'end');
+        messageInput.focus();
+    },
+    onClickOutside: (e) => {
+        if(e.target.id === 'emoji-picker'){
+            document.body.classList.toggle('show-emoji-picker');
+        }else{
+            document.body.classList.remove('show-emoji-picker');
+        }
+        
+    }
+});
+
+document.querySelector('.chat-form').appendChild(picker);
+
+sendMessageBtn.addEventListener('click', (e) => handleOutgoingMessage(e));
+document.querySelector('#file-upload').addEventListener('click', () => fileInput1.click());
 

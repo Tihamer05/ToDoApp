@@ -86,6 +86,7 @@ h1:hover::before {
     position: fixed;
     top: 0;
     left: 0;
+    font-weight: bold;
     width: 210px;
     height: 100vh;
     background-color: var(--sidebar-color);
@@ -330,7 +331,6 @@ form{
 
 .addBtn:hover{
     color: var(--accent-color);
-    transform: scale3d(1.1, 1.1, 1);
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
@@ -460,7 +460,7 @@ input[type="checkbox"]{
         transform: translateX(-50%);
         width: 70%;
         max-width: 320px;
-        max-height: 320px;
+        max-height: 300px;
     }
 }
 
