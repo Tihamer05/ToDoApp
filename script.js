@@ -1,6 +1,8 @@
 const todoForm = document.querySelector('form');
 const input = document.getElementById('todo-input');
 const todoListUl = document.getElementById('todo-list');
+const overlayMedia = document.querySelector('.chatbot-overlay');
+
 
 let state = [];
 let selectedDate = null; 

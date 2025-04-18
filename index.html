@@ -131,6 +131,7 @@
         </ul>
     </div>
 
+    <div class="chatbot-overlay"></div>
     <div class="chatbot-popup">
       <div class="chat-header">
         <div class="header-info">
@@ -162,12 +163,19 @@
         <form action="#" class="chat-form">
           <textarea placeholder="Message..." class="message-input"></textarea>
           <div class="chat-controls">
-            <button type="button" class="material-symbols-outlined">
+            <button type="button" id="emoji-picker" class="material-symbols-outlined">
               sentiment_satisfied
             </button>
-            <button type="button" class="material-symbols-outlined">
-              attach_file
-            </button>
+            <div class="file-upload-wrapper">
+              <input type="file" accept="images/*" id="file-input1" hidden>
+              <img src="">
+              <button type="button" id="file-upload" class="material-symbols-outlined">
+                attach_file
+              </button>
+              <button type="button" id="file-cancel" class="material-symbols-outlined">
+                close
+              </button>
+            </div>
             <button type="submit" class="material-symbols-outlined" id="send-message">
               arrow_upward
             </button>
@@ -176,6 +184,8 @@
       </div>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
 
     <footer class="footer">
         <div class="social">
