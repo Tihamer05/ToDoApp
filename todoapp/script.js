@@ -219,6 +219,12 @@ calendarBtn.addEventListener('click', function () {
     overlay.classList.remove('active');
 });
 
+const focusBtn = document.getElementById('focus-btn');
+
+focusBtn.addEventListener('click', () =>{
+    window.location.href = '../pomodoro/pomodoro.html';
+});
+
 
 function toggleSidebar() {
     menu.classList.toggle("active");
