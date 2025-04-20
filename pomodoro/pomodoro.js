@@ -16,6 +16,26 @@ button = document.querySelector(".button");
 let currentTimer = null;
 let myInterval = null;
 
+let darkMode = localStorage.getItem('dark-mode');
+const themeSwitch = document.getElementById('theme-switch');
+
+const enableDarkmode = () =>{
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('dark-mode', 'active');
+}
+
+const disableDarkmode = () =>{
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('dark-mode', null);
+}
+
+if(darkMode === 'active') enableDarkmode();
+
+themeSwitch.addEventListener('click', () =>{
+    darkMode = localStorage.getItem('dark-mode');
+    darkMode !== 'active' ? enableDarkmode() : disableDarkmode();
+});
+
 function showDefaultTimer() {
     pomodoro.style.display = 'block';
     short.style.display = 'none';
