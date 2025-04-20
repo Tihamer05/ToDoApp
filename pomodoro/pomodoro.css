@@ -4,38 +4,30 @@
     --bg-gradient-start: #0ECF9D;
     --bg-gradient-end: #065943;     
     --text-color: #ffffff;
-  
     --button-bg: #0A5D4D;
     --button-hover: #08735B;
-  
     --circle-bg: #0A5D4D;
     --circle-border: #3FE6B2;         
-  
     --start-hover: #50DC7C;            
     --stop-hover: #FF6B6B;             
-  
     --shadow-color: rgba(0, 0, 0, 0.15); 
     --alert-bg: #FF4C4C;     
-  }
-  
+}
 
 .dark-mode {
     --bg-gradient-start: #1A1A2E;
     --bg-gradient-end: #16213E;
     --text-color: #E6F7FF;
-    
     --button-bg: #4A3F76;
     --button-hover: #2f254c;
-    
     --circle-bg: #3D2A68;
     --circle-border: #7B5FE2;
-    
     --start-hover: #6BD6FF;
     --stop-hover: #FF6B8B;
-    
     --shadow-color: rgba(0, 0, 0, 0.3);
     --alert-bg: #FF4D6D;
 }
+
 
 * {
     margin: 0;
@@ -60,9 +52,11 @@ body {
     min-height: 100vh;
     min-height: 100dvh;
     color: var(--text-color);
+    position: relative;
 }
 
-#theme-switch{
+
+#theme-switch {
     height: 50px;
     width: 50px;
     border: none;
@@ -75,46 +69,47 @@ body {
     justify-content: center;
     align-items: center;
     transition: 0.2s ease-in-out;
+    cursor: pointer;
+    z-index: 10;
+    position: relative;
 }
 
-#theme-switch:hover{
-    background: var(--circle-border);
-    color: var(--bg-gradient-start);
-    box-shadow:  0 0 15px var(--circle-border);
+#theme-switch:hover {
+    box-shadow: 0 0 15px var(--circle-border);
 }
 
-#theme-switch .material-icons:last-child{
+#theme-switch .material-icons:last-child {
     display: none;
 }
 
-#dark{
-    color: rgb(20, 19, 19);
-}
+#dark { color: rgb(20, 19, 19); }
+#light { color: white; }
 
-#light{
-    color: white;
-}
-
-.dark-mode #theme-switch .material-icons:first-child{
+.dark-mode #theme-switch .material-icons:first-child {
     display: none;
 }
 
-.dark-mode #theme-switch .material-icons:last-child{
+.dark-mode #theme-switch .material-icons:last-child {
     display: block;
 }
+
 
 .container {
     text-align: center;
     width: 100%;
     padding: 10px 0;
+    position: relative;
+    z-index: 2;
 }
 
 .timer {
     display: inline-block;
     padding: 10px;
     width: 600px;
+    max-width: 100%;
     box-sizing: border-box;
 }
+
 
 main {
     width: 23rem;
@@ -123,32 +118,6 @@ main {
     text-align: center;
     margin: 0 auto;
     margin-bottom: 2rem;
-}
-
-.header-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-#fullscreen-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-color);
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    margin-left: 0;
-}
-
-
-.button-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
 }
 
 .pomodoro {
@@ -175,14 +144,45 @@ main {
     height: 21rem;
 }
 
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#fullscreen-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+}
+
+
 .container .timer h1 {
     font-size: 2rem;
     margin: 10px;
 }
 
-.time {
-    font-size: 5rem !important;
+.time, .timer-display {
+    font-size: 4rem;
     margin: 20px auto;
+    font-weight: bold;
+}
+
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
 }
 
 .button {
@@ -199,16 +199,6 @@ main {
 .button.active,
 .button:hover {
     background-color: var(--button-hover);
-}
-
-.hidden {
-    display: block;
-}
-
-.timer-display {
-    font-size: 5rem;
-    margin-top: 20px;
-    font-weight: bold;
 }
 
 .buttons {
@@ -235,6 +225,7 @@ main {
     background-color: var(--start-hover);
 }
 
+
 #timer-message {
     color: var(--text-color);
     background-color: var(--alert-bg);
@@ -246,23 +237,91 @@ main {
 }
 
 
+.gradient-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.gradient-sphere {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+}
+
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.glow {
+    position: absolute;
+    width: 40vw;
+    height: 40vh;
+    background: radial-gradient(circle, rgba(72, 0, 255, 0.15), transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    animation: pulse 8s infinite alternate;
+    filter: blur(30px);
+    pointer-events: none;
+}
+
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+@keyframes float-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(10%, 10%) scale(1.1); }
+}
+
+@keyframes float-2 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-10%, -5%) scale(1.15); }
+}
+
+@keyframes float-3 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+    100% { transform: translate(-5%, 10%) scale(1.05); opacity: 0.6; }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9); }
+    100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+}
+
 
 @media screen and (min-width: 320px) and (max-width: 600px) {
     .container {
-        transform: scale(0.9)
-    }
-
-    .timer {
-        width: 500px;
-    }
-
-    .container {
+        transform: scale(0.9);
         padding: 1rem;
-    }
-
-    .timer {
-        width: 100%;
-        max-width: 100%;
     }
 
     .pomodoro::before {
@@ -275,7 +334,11 @@ main {
         height: 20rem;
     }
 
-    .container .timer h1{
+    .container .timer h1 {
         font-size: 1.5rem;
     }
+}
+
+.hidden {
+    display: block;
 }
