@@ -36,6 +36,23 @@ themeSwitch.addEventListener('click', () =>{
     darkMode !== 'active' ? enableDarkmode() : disableDarkmode();
 });
 
+const musicPlayerBtn = document.getElementById('music-appear');
+const songPlayer = document.querySelector('.wrapper');
+const overlay = document.querySelector('.overlay');
+
+songPlayer.style.display = 'none';
+
+musicPlayerBtn.addEventListener('click', () =>{
+    if(songPlayer.style.display === 'none'){
+        songPlayer.style.display = 'block';
+        overlay.classList.add('active');
+    }else{
+        songPlayer.style.display = 'none';
+        overlay.classList.remove('active');
+    }
+
+})
+
 function showDefaultTimer() {
     pomodoro.style.display = 'block';
     short.style.display = 'none';

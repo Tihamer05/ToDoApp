@@ -109,11 +109,11 @@ h1:hover::before {
     margin: 8px;
     cursor: pointer;
     transition: 0.2s ease;
+    border-radius: 10px;
 }
 
 .sidebar .menu-item:hover {
     background-color: #068d52;
-    border-radius: 10px;
 }
 
 .menu-item img {

@@ -21,6 +21,10 @@ const userData = {
 
 const chatHistory = [];
 
+if (chatHistory.length > 20) {
+    chatHistory.splice(0, chatHistory.length - 20); // csak az utolsó 20 elem marad
+}
+
 const creatMessageElement = (content, ...classes) => {
     const div = document.createElement('div');
     div.classList.add('message', ...classes);
