@@ -49,8 +49,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
     min-height: 100dvh;
+    min-height: 100dvh;
+    height: 100dvh;
     color: var(--text-color);
     position: relative;
 }
@@ -242,13 +243,7 @@ main {
     transition: all 0.2s ease-in;
 }
 
-#stop:hover {
-    background-color: var(--stop-hover);
-}
 
-#start:hover {
-    background-color: var(--start-hover);
-}
 
 
 #timer-message {
@@ -355,6 +350,7 @@ main {
     transition: opacity 0.3s ease;
     display: none;
 }
+
 
 @media screen and (min-width: 320px) and (max-width: 600px) {
     .container {
@@ -510,10 +506,7 @@ main {
     transition: all 0.2s ease-in-out;
 }
 
-.controls i:hover {
-    -webkit-text-fill-color: var(--circle-border);
-    background: white;
-}
+
 
 .controls i:nth-child(2),
   .controls i:nth-child(4) {
@@ -584,5 +577,20 @@ main {
     font-size: 22px;
     color: white;
     cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine){
+    #stop:hover {
+        background-color: var(--stop-hover);
+    }
+    
+    #start:hover {
+        background-color: var(--start-hover);
+    }
+
+    .controls i:hover {
+        -webkit-text-fill-color: var(--circle-border);
+        background: white;
+    }
 }
   
