@@ -193,6 +193,7 @@ function getToDoListFromDOM() {
 }
 
 function BuildTheDom(state) {
+    
     const ulInDOM = getToDoListFromDOM();
 
     ulInDOM.replaceChildren()
@@ -224,6 +225,15 @@ const focusBtn = document.getElementById('focus-btn');
 focusBtn.addEventListener('click', () =>{
     window.location.href = '../pomodoro/pomodoro.html';
 });
+
+const removeBtn = document.getElementById('remove-all-btn');
+removeBtn.addEventListener('click', () =>{
+    state.forEach(item =>{
+        deleteLi(item.id);
+    });
+    menu.classList.remove('active');
+    overlay.classList.remove('active');
+})
 
 
 function toggleSidebar() {
