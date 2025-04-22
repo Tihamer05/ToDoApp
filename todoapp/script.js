@@ -223,7 +223,7 @@ calendarBtn.addEventListener('click', function () {
 const focusBtn = document.getElementById('focus-btn');
 
 focusBtn.addEventListener('click', () =>{
-    window.location.href = '../pomodoro/pomodoro.html';
+    window.location.href = 'pomodoro/pomodoro.html';
 });
 
 const removeBtn = document.getElementById('remove-all-btn');
