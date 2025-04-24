@@ -308,7 +308,7 @@ body.show-emoji-picker em-emoji-picker{
         right: 5vw;
         left: 5vw;
         bottom: 10px;
-        max-height: 60vh;
+        max-height: 80vh;
         margin: 0 auto;
     }
     .chatbot-overlay {

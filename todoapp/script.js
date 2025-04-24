@@ -373,7 +373,7 @@ function typePhrase() {
             currentCharIndex++;
         } else {
             clearInterval(typingInterval);
-            setTimeout(deletePhrase, 1000); 
+            setTimeout(deletePhrase, 30000); 
         }
     }, 100);
 }
@@ -414,7 +414,7 @@ function checkDates(){
         
         if(!todoElement) return;
         if (todo.done) {
-            todoElement.style.border = 'none';
+            todoElement.style.border = '2px solid transparent'; 
             return;
         }
         if(dueDate < now){
@@ -477,7 +477,7 @@ document.getElementById('over').addEventListener('click', function () {
 
 
 function convertToCSV(state) {
-    const header = ['Text ', 'Done ', 'Due Date '];
+    const header = ['Text', 'Done', 'Due Date'];
     const rows = state.map(todo => [
         todo.text,
         (todo.done === true) ? 'Done' : 'Not done',
@@ -485,7 +485,7 @@ function convertToCSV(state) {
     ]);
 
     
-    const csvContent = [header.join(','), ...rows.map(row => row.join('  '))].join('\n');
+    const csvContent = [header.join(','), ...rows.map(row => row.join(','))].join('\n');
 
     return csvContent;
 }
@@ -524,11 +524,16 @@ fileInput.addEventListener('change', () =>{
     const reader = new FileReader();
     reader.onload = function(e) {
         const text = e.target.result.trim();
-        const rows = text.split('\n').map(row => row.split(','));
-    
+        const rows = text.split('\n').map(row => row.split(',').map(cell => cell.trim()));
+
+        const exceptedHeader = ['Text', 'Done', 'Due Date'];
         let lastValidDate = null;
+
+        const hasHeader = exceptedHeader.every((value, index) => rows[0][index] === value);
+
+        const dataRows = hasHeader ? rows.slice(1) : rows;
     
-        rows.forEach((row, index) => {
+        dataRows.forEach((row, index) => {
             const cells = row.map(cell => cell.trim());
     
             if (cells.length !== 3) {
@@ -544,12 +549,21 @@ fileInput.addEventListener('change', () =>{
             if (date && !isNaN(date.getTime())) {
                 lastValidDate = new Date(date); 
             }
-    
+
+            const dueDate = date && !isNaN(date.getTime()) ? date.toISOString() : null;
+
+            const alreadyExist = state.some(todo => todo.text.toLowerCase === text.toLowerCase && todo.dueDate === dueDate);
+
+            if(alreadyExist){
+                alert(`Duplicate found, skipping: '${text}'`);
+                return;
+            }
+
             const newTodo = {
                 id: Math.random(),
                 done: done,
                 text: text,
-                dueDate: date && !isNaN(date.getTime()) ? date.toISOString() : null
+                dueDate: dueDate
             };
     
             state.push(newTodo);
