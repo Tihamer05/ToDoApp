@@ -4,7 +4,7 @@ const todoListUl = document.getElementById('todo-list');
 const overlayMedia = document.querySelector('.chatbot-overlay');
 
 
-let state = [];
+var  state = [];
 let selectedDate = null; 
 const phrases = [
     "Add a new task...",
@@ -62,6 +62,7 @@ function createTodo(todotext, checked, id, dueDate) {
     const todoLi = document.createElement('li');
     todoLi.className = "todo";
     todoLi.id = id;
+    todoLi.draggable = true;
 
     if (checked) {
         todoLi.classList.add('completed');
@@ -434,11 +435,14 @@ function showAllTodos() {
     });
 }
 
+const nowBtn = document.getElementById('now');
+const overBtn = document.getElementById('over');
+
 function toggleFilter(button, conditionFn) {
     const isActive = button.classList.contains('active');
 
-    document.getElementById('now').classList.remove('active');
-    document.getElementById('over').classList.remove('active');
+    nowBtn.classList.remove('active');
+    overBtn.classList.remove('active');
 
 
     showAllTodos();
@@ -467,14 +471,41 @@ function toggleFilter(button, conditionFn) {
     }
 }
 
-document.getElementById('now').addEventListener('click', function () {
+nowBtn.addEventListener('click', function () {
     toggleFilter(this, (dueDate, now) => dueDate.getTime() === now.getTime());
 });
 
-document.getElementById('over').addEventListener('click', function () {
+overBtn.addEventListener('click', function () {
     toggleFilter(this, (dueDate, now) => dueDate < now);
 });
 
+document.addEventListener('click', function (e) {
+    setTimeout(() => {
+        if (!nowBtn.contains(e.target) && !overBtn.contains(e.target)) {
+            if (nowBtn.classList.contains('active') || overBtn.classList.contains('active')) {
+                nowBtn.classList.remove('active');
+                overBtn.classList.remove('active');
+                showAllTodos();
+            }
+        }
+    }, 0);
+});
+
+const sortBtn = document.getElementById('sort');
+const FAR_FUTURE = new Date('9999-12-31');
+
+sortBtn.addEventListener('click', () =>{
+    state.sort((a, b) =>{
+        const dateA = a.dueDate ? new Date(a.dueDate) : FAR_FUTURE;
+        const dateB = b.dueDate ? new Date(b.dueDate) : FAR_FUTURE;
+        return dateA - dateB;
+    });
+
+    BuildTheDom(state);
+    saveStateHardDisk();
+    checkDates();
+    
+});
 
 function convertToCSV(state) {
     const header = ['Text', 'Done', 'Due Date'];
@@ -508,7 +539,12 @@ function downloadCSV(state) {
 }
 
 document.getElementById('download').addEventListener('click', () =>{
-    downloadCSV(state);
+    if(state.length === 0) {
+        alert(`The To Do List is empty!`);
+    }
+    else{
+        downloadCSV(state);
+    }
 })
 
 
@@ -552,7 +588,7 @@ fileInput.addEventListener('change', () =>{
 
             const dueDate = date && !isNaN(date.getTime()) ? date.toISOString() : null;
 
-            const alreadyExist = state.some(todo => todo.text.toLowerCase === text.toLowerCase && todo.dueDate === dueDate);
+            const alreadyExist = state.some(todo => todo.text.toLowerCase() === text.toLowerCase() && todo.dueDate === dueDate);
 
             if(alreadyExist){
                 alert(`Duplicate found, skipping: '${text}'`);

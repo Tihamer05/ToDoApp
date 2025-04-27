@@ -19,7 +19,19 @@ const userData = {
     }
 }
 
+
+
 const chatHistory = [];
+
+const currentStateText = state.map(item => item.text).join('\n');
+
+chatHistory.push({
+    role: 'user',
+    parts: [
+        { text: currentStateText }
+    ]
+});
+
 
 if (chatHistory.length > 20) {
     chatHistory.splice(0, chatHistory.length - 20);
@@ -31,6 +43,8 @@ const creatMessageElement = (content, ...classes) => {
     div.innerHTML = content;
     return div;
 }
+
+
 
 const generateBotResponse = async (incomingMessageDiv) => {
     const messageElement = incomingMessageDiv.querySelector('.message-text');
@@ -113,6 +127,7 @@ const handleOutgoingMessage = (e) =>{
 
 messageInput.addEventListener('keydown', (e) =>{
     const userMessage = e.target.value.trim();
+    
     if(e.key === 'Enter' && userMessage){
         document.body.classList.remove('show-emoji-picker');
         handleOutgoingMessage(e);

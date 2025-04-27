@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App Sapi</title>
+    <title>Todo App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="todoapp/style.css" >
     <link rel="stylesheet" href="todoapp/chat_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="icon" type="iamge/x-icon" href="favicon/favicon.png">
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="todoapp/script.js" defer></script>
     <script src="todoapp/chat_script.js" defer></script>
@@ -64,7 +64,7 @@
         </div>
         <div class="menu-item" id="remove-all-btn">
           <img src="https://img.icons8.com/?size=100&id=fxyhG29jgJRt&format=png&color=FFFFFF" alt="remove icon" />
-          <sapn>Remove All</sapn>
+          <span>Remove All</span>
         </div>
     </div>
 
@@ -107,12 +107,19 @@
           </svg>
         </button>
 
+        <button class="button" id="sort">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+        
+
         
     </div>
   
 
     <div class="wrapper">
-        <form>
+        <form id="form">
             <input id="todo-input" type="text" 
             placeholder="" autocomplete="off">
             <button id="add-button">Add</button>
