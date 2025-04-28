@@ -2,7 +2,7 @@
     --background: #101114;
     --primary-color: #1C1D20;
     --secondary-color: #4A4D57;
-    --accent-color: #07D48F;
+    --accent-color:#07D48F;
     --text-color: #F9F9F9;
     --sidebar-color: #14171A;
 }
@@ -20,7 +20,6 @@ html{
 
 body{
     min-height: 100vh;
-    /*padding: 10px;*/
     background-color: var(--background);
     display: flex;
     flex-direction: column;
@@ -48,14 +47,7 @@ h1 {
     position: relative;
 }
 
-h1:hover {
-    color: var(--accent-color);
-    text-shadow: 
-        0 0 8px var(--accent-color),
-        0 0 16px var(--secondary-color),
-        0 0 24px var(--primary-color);
-    transform: translateY(-5px);
-}
+
 
 h1::before {
     content: '';
@@ -75,12 +67,7 @@ h1::before {
     z-index: -1;
 }
 
-h1:hover::before {
-    width: 100%;
-    height: 6px;
-    filter: blur(1px);
-    opacity: 0.8;
-}
+
 
 .sidebar {
     position: fixed;
@@ -112,9 +99,7 @@ h1:hover::before {
     border-radius: 10px;
 }
 
-.sidebar .menu-item:hover {
-    background-color: #068d52;
-}
+
 
 .menu-item img {
     width: 20px;
@@ -185,9 +170,7 @@ h1:hover::before {
 .btn {
     cursor: pointer;
 }
-.btn:hover{
-    color: var(--accent-color);
-}
+
 #month-year {
     font-weight: bold;
     font-size: 20px;
@@ -213,11 +196,7 @@ h1:hover::before {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-.days div:hover {
-    background-color: var(--text-color);
-    color: var(--accent-color) !important;
 
-}
 .days .today {
     background-color: var(--accent-color);
     color: var(--text-color);
@@ -272,11 +251,7 @@ form{
     cursor: pointer;
 }
 
-#add-button:hover{
-    background: var(--accent-color);
-    color: #131313;
-    box-shadow:  0 0 10px var(--accent-color);
-}
+
 
 .todo{
     margin-top: 10px;
@@ -285,11 +260,10 @@ form{
     border-radius: 10px;
     display: flex;
     align-items: center;
+
 }
 
-.todo:hover{
-    background-color: #242529;
-}
+
 
 .todo .todo-text{
     padding: 15px;
@@ -312,9 +286,7 @@ form{
     transition: 200ms ease;
 }
 
-.delete-button:hover svg{
-    fill: #ff0033;
-}
+
 
 .addBtn{
     padding: 3px;
@@ -329,10 +301,7 @@ form{
     color: var(--secondary-color);
 }
 
-.addBtn:hover{
-    color: var(--accent-color);
-    transition: transform 0.2s ease, color 0.2s ease;
-}
+
 
 .has-todo-marker {
     display: inline-block;
@@ -464,6 +433,69 @@ input[type="checkbox"]{
     }
 }
 
+@media (hover: hover) and (pointer: fine){
+    h1:hover {
+        color: var(--accent-color);
+        text-shadow: 
+            0 0 8px var(--accent-color),
+            0 0 16px var(--secondary-color),
+            0 0 24px var(--primary-color);
+        transform: translateY(-5px);
+    }
+
+    h1:hover::before {
+        width: 100%;
+        height: 6px;
+        filter: blur(1px);
+        opacity: 0.8;
+    }
+
+    .sidebar .menu-item:hover {
+        background-color: var(--accent-color);
+    }
+
+    .btn:hover{
+        color: var(--accent-color);
+    }
+
+    .days div:hover {
+        background-color: var(--text-color);
+        color: var(--accent-color) !important;
+    
+    }
+
+    #add-button:hover{
+        background: var(--accent-color);
+        color: #131313;
+        box-shadow:  0 0 10px var(--accent-color);
+    }
+
+    .todo:hover{
+        background-color: #242529;
+    }
+
+    .delete-button:hover svg{
+        fill: #ff0033;
+    }
+
+    .addBtn:hover{
+        color: var(--accent-color);
+        transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .footer .social a:hover{
+        transform: scale(1.2) translateY(-10px);
+        background: var(--accent-color);
+        color: var(--primary-color);
+        box-shadow:  0 0 10px var(--accent-color);
+    }
+
+    .button:hover {
+        transform: translateY(-4px);
+    }
+
+}
+
 
 .footer{
     border-radius: 5px;
@@ -500,12 +532,7 @@ input[type="checkbox"]{
     transition: 0.5s ease-in-out;
 }
 
-.footer .social a:hover{
-    transform: scale(1.2) translateY(-10px);
-    background: var(--accent-color);
-    color: var(--primary-color);
-    box-shadow:  0 0 10px var(--accent-color);
-}
+
 
 .footer .copyright{
     font-size: 15px;
@@ -542,9 +569,7 @@ input[type="checkbox"]{
     cursor: pointer;
 }
   
-.button:hover {
-    transform: translateY(-4px);
-}
+
 
 button.active {
     transform: translateY(-4px);

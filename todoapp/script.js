@@ -4,7 +4,7 @@ const todoListUl = document.getElementById('todo-list');
 const overlayMedia = document.querySelector('.chatbot-overlay');
 
 
-let state = [];
+var  state = [];
 let selectedDate = null; 
 const phrases = [
     "Add a new task...",
@@ -62,6 +62,7 @@ function createTodo(todotext, checked, id, dueDate) {
     const todoLi = document.createElement('li');
     todoLi.className = "todo";
     todoLi.id = id;
+    todoLi.draggable = true;
 
     if (checked) {
         todoLi.classList.add('completed');
@@ -193,6 +194,7 @@ function getToDoListFromDOM() {
 }
 
 function BuildTheDom(state) {
+    
     const ulInDOM = getToDoListFromDOM();
 
     ulInDOM.replaceChildren()
@@ -222,8 +224,17 @@ calendarBtn.addEventListener('click', function () {
 const focusBtn = document.getElementById('focus-btn');
 
 focusBtn.addEventListener('click', () =>{
-    window.location.href = '../pomodoro/pomodoro.html';
+    window.location.href = 'pomodoro/pomodoro.html';
 });
+
+const removeBtn = document.getElementById('remove-all-btn');
+removeBtn.addEventListener('click', () =>{
+    state.forEach(item =>{
+        deleteLi(item.id);
+    });
+    menu.classList.remove('active');
+    overlay.classList.remove('active');
+})
 
 
 function toggleSidebar() {
@@ -363,7 +374,7 @@ function typePhrase() {
             currentCharIndex++;
         } else {
             clearInterval(typingInterval);
-            setTimeout(deletePhrase, 1000); 
+            setTimeout(deletePhrase, 30000); 
         }
     }, 100);
 }
@@ -404,7 +415,7 @@ function checkDates(){
         
         if(!todoElement) return;
         if (todo.done) {
-            todoElement.style.border = 'none';
+            todoElement.style.border = '2px solid transparent'; 
             return;
         }
         if(dueDate < now){
@@ -424,11 +435,14 @@ function showAllTodos() {
     });
 }
 
+const nowBtn = document.getElementById('now');
+const overBtn = document.getElementById('over');
+
 function toggleFilter(button, conditionFn) {
     const isActive = button.classList.contains('active');
 
-    document.getElementById('now').classList.remove('active');
-    document.getElementById('over').classList.remove('active');
+    nowBtn.classList.remove('active');
+    overBtn.classList.remove('active');
 
 
     showAllTodos();
@@ -457,17 +471,44 @@ function toggleFilter(button, conditionFn) {
     }
 }
 
-document.getElementById('now').addEventListener('click', function () {
+nowBtn.addEventListener('click', function () {
     toggleFilter(this, (dueDate, now) => dueDate.getTime() === now.getTime());
 });
 
-document.getElementById('over').addEventListener('click', function () {
+overBtn.addEventListener('click', function () {
     toggleFilter(this, (dueDate, now) => dueDate < now);
 });
 
+document.addEventListener('click', function (e) {
+    setTimeout(() => {
+        if (!nowBtn.contains(e.target) && !overBtn.contains(e.target)) {
+            if (nowBtn.classList.contains('active') || overBtn.classList.contains('active')) {
+                nowBtn.classList.remove('active');
+                overBtn.classList.remove('active');
+                showAllTodos();
+            }
+        }
+    }, 0);
+});
+
+const sortBtn = document.getElementById('sort');
+const FAR_FUTURE = new Date('9999-12-31');
+
+sortBtn.addEventListener('click', () =>{
+    state.sort((a, b) =>{
+        const dateA = a.dueDate ? new Date(a.dueDate) : FAR_FUTURE;
+        const dateB = b.dueDate ? new Date(b.dueDate) : FAR_FUTURE;
+        return dateA - dateB;
+    });
+
+    BuildTheDom(state);
+    saveStateHardDisk();
+    checkDates();
+    
+});
 
 function convertToCSV(state) {
-    const header = ['Text ', 'Done ', 'Due Date '];
+    const header = ['Text', 'Done', 'Due Date'];
     const rows = state.map(todo => [
         todo.text,
         (todo.done === true) ? 'Done' : 'Not done',
@@ -475,7 +516,7 @@ function convertToCSV(state) {
     ]);
 
     
-    const csvContent = [header.join(','), ...rows.map(row => row.join('  '))].join('\n');
+    const csvContent = [header.join(','), ...rows.map(row => row.join(','))].join('\n');
 
     return csvContent;
 }
@@ -498,7 +539,12 @@ function downloadCSV(state) {
 }
 
 document.getElementById('download').addEventListener('click', () =>{
-    downloadCSV(state);
+    if(state.length === 0) {
+        alert(`The To Do List is empty!`);
+    }
+    else{
+        downloadCSV(state);
+    }
 })
 
 
@@ -514,11 +560,16 @@ fileInput.addEventListener('change', () =>{
     const reader = new FileReader();
     reader.onload = function(e) {
         const text = e.target.result.trim();
-        const rows = text.split('\n').map(row => row.split(','));
-    
+        const rows = text.split('\n').map(row => row.split(',').map(cell => cell.trim()));
+
+        const exceptedHeader = ['Text', 'Done', 'Due Date'];
         let lastValidDate = null;
+
+        const hasHeader = exceptedHeader.every((value, index) => rows[0][index] === value);
+
+        const dataRows = hasHeader ? rows.slice(1) : rows;
     
-        rows.forEach((row, index) => {
+        dataRows.forEach((row, index) => {
             const cells = row.map(cell => cell.trim());
     
             if (cells.length !== 3) {
@@ -534,12 +585,21 @@ fileInput.addEventListener('change', () =>{
             if (date && !isNaN(date.getTime())) {
                 lastValidDate = new Date(date); 
             }
-    
+
+            const dueDate = date && !isNaN(date.getTime()) ? date.toISOString() : null;
+
+            const alreadyExist = state.some(todo => todo.text.toLowerCase() === text.toLowerCase() && todo.dueDate === dueDate);
+
+            if(alreadyExist){
+                alert(`Duplicate found, skipping: '${text}'`);
+                return;
+            }
+
             const newTodo = {
                 id: Math.random(),
                 done: done,
                 text: text,
-                dueDate: date && !isNaN(date.getTime()) ? date.toISOString() : null
+                dueDate: dueDate
             };
     
             state.push(newTodo);

@@ -68,7 +68,7 @@
 }
 
 #close-chatbot:hover{
-    background: #19a367;
+    background: white;
 }
 
 .chat-body{
@@ -303,10 +303,13 @@ body.show-emoji-picker em-emoji-picker{
 }
 
 @media(max-width: 800px){
-    .chatbot-popup{
+    .chatbot-popup {
+        width: 90vw;
+        right: 5vw;
+        left: 5vw;
         bottom: 10px;
-        right: auto;
-        max-height: 600px;
+        max-height: 80vh;
+        margin: 0 auto;
     }
     .chatbot-overlay {
         position: fixed;
