@@ -369,6 +369,62 @@ input[type="checkbox"]{
     display: none;
 }
 
+.quote-box{
+    background-color: var(--primary-color);
+    border: 6px solid var(--accent-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 30px;
+    width: 60vw;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 12px;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 901;
+}
+
+.quote-text{
+    font-size: 22px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.quote-author{
+    font-size: 18px;
+    color: var(--text-color);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.quote-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    display: none;
+    pointer-events: none;
+    z-index: 899; 
+    transition: opacity 0.3s ease;
+}
+
+
+.quote-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#close-quote{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
 @media(max-width: 500px){
     html{
         font-size: 12pt;

@@ -240,6 +240,50 @@ removeBtn.addEventListener('click', () =>{
     overlay.classList.remove('active');
 })
 
+const quoteOverlay = document.getElementById('quote-overlay');
+const quoteBox = document.getElementById('quote-box');
+const quoteBtn = document.getElementById('motivation-btn');
+
+const quotes = [
+    { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
+    { text: "Don't wait for the perfect moment. Take the moment and make it perfect.", author: "Zoey Sayward" },
+    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+    { text: "Dream big and dare to fail.", author: "Norman Vaughan" },
+    { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+    { text: "Hard work beats talent when talent doesn’t work hard.", author: "Tim Notke" },
+    { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
+    { text: "Success usually comes to those who are too busy to be looking for it.", author: "Henry David Thoreau" },
+    { text: "Your time is limited, so don’t waste it living someone else’s life.", author: "Steve Jobs" },
+    { text: "Push yourself, because no one else is going to do it for you.", author: "Unknown" }
+];  
+
+function getRandomQuote() {
+    const randIndex = Math.floor(Math.random() * quotes.length);
+    const randomQuote = quotes[randIndex];
+    document.getElementById('quote-text').textContent = `'${randomQuote.text}'`;
+    document.getElementById('author').textContent = `'${randomQuote.author}'`;
+
+}
+
+quoteBtn.addEventListener('click', () => {
+    menu.classList.remove('active');
+    overlay.classList.remove('active');
+    getRandomQuote();
+
+    setTimeout(() => {
+        quoteBox.style.display = 'block';
+        quoteOverlay.classList.add('active');
+        quoteOverlay.style.display = 'block';
+    },250);
+        
+})
+
+const quoteClose = document.getElementById('close-quote');
+quoteClose.addEventListener('click', () => {
+    quoteBox.style.display = 'none';
+    quoteOverlay.classList.remove('active');
+    quoteOverlay.style.display = 'none';
+});
 
 function toggleSidebar() {
     menu.classList.toggle("active");
@@ -480,6 +524,7 @@ nowBtn.addEventListener('click', function () {
 overBtn.addEventListener('click', function () {
     toggleFilter(this, (dueDate, now) => dueDate < now);
 });
+quoteBox.style.display = 'none';
 
 document.addEventListener('click', function (e) {
     setTimeout(() => {
@@ -491,7 +536,9 @@ document.addEventListener('click', function (e) {
                 checkDates();
             }
         }
+    
     }, 0);
+    
 });
 
 const sortBtn = document.getElementById('sort');
