@@ -290,6 +290,8 @@ function toggleSidebar() {
     overlay.classList.toggle("active");
     calendarContainer.style.display = 'none';
     quoteBox.style.display = 'none';
+    quoteOverlay.classList.remove('active');
+    quoteOverlay.style.display = 'none';
 }
 
 
