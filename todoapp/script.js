@@ -289,6 +289,7 @@ function toggleSidebar() {
     menu.classList.toggle("active");
     overlay.classList.toggle("active");
     calendarContainer.style.display = 'none';
+    quoteBox.style.display = 'none';
 }
 
 
