@@ -181,12 +181,15 @@ function deleteLi(id) {
         if (index !== -1) {
             state.splice(index, 1);
             saveStateHardDisk();
+
+            setTimeout(() => {
+                BuildTheDom(state);
+            }, 100); 
+
             checkDates();
         }
 
-        setTimeout(() => {
-            BuildTheDom(state);
-        }, 100); 
+        
     }, { once: true });
 }
 
@@ -204,7 +207,7 @@ function BuildTheDom(state) {
         const liElement = createTodo(todo.text, todo.done, todo.id, todo.dueDate);
         ulInDOM.appendChild(liElement);
     }
-
+    checkDates();
     
 }
 
@@ -402,19 +405,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function checkDates(){
     const now = new Date();
-    
     now.setHours(0, 0, 0, 0);
     
-    state.forEach(todo =>{
+    state.forEach(todo => {
         if (!todo.dueDate) return;
 
         const dueDate = new Date(todo.dueDate);
         dueDate.setHours(0, 0, 0, 0);
 
-    
         const todoElement = document.getElementById(todo.id);
-        
         if(!todoElement) return;
+        
         if (todo.done) {
             todoElement.style.border = '2px solid transparent'; 
             return;
@@ -424,8 +425,7 @@ function checkDates(){
         }else if(dueDate.getTime() === now.getTime()){
             todoElement.style.border = '2px solid orange';
         }
-    })
-
+    });
 }
 
 
@@ -470,6 +470,7 @@ function toggleFilter(button, conditionFn) {
             }
         });
     }
+    checkDates();
 }
 
 nowBtn.addEventListener('click', function () {
@@ -503,9 +504,10 @@ sortBtn.addEventListener('click', () =>{
         return dateA - dateB;
     });
 
+    checkDates();
     BuildTheDom(state);
     saveStateHardDisk();
-    checkDates();
+    
     
 });
 
