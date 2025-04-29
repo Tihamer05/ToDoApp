@@ -170,24 +170,25 @@ function createTodo(todotext, checked, id, dueDate) {
 
 function deleteLi(id) {
     const element = document.getElementById(id);
-
     if (!element) return;
 
     element.style.transition = 'transform 0.3s ease, opacity 0.3s ease-out';
     element.style.transform = 'translateX(100%)';
     element.style.opacity = '0';
 
-    element.addEventListener('transitionend', function () {
+    element.addEventListener('transitionend', function() {
         const index = state.findIndex(e => e.id === id);
         if (index !== -1) {
             state.splice(index, 1);
             saveStateHardDisk();
-            BuildTheDom(state);
             checkDates();
         }
-    },{ once: true }); 
-}
 
+        setTimeout(() => {
+            BuildTheDom(state);
+        }, 100); 
+    }, { once: true });
+}
 
 function getToDoListFromDOM() {
     return document.getElementById('todo-list');
@@ -486,6 +487,7 @@ document.addEventListener('click', function (e) {
                 nowBtn.classList.remove('active');
                 overBtn.classList.remove('active');
                 showAllTodos();
+                
             }
         }
     }, 0);
