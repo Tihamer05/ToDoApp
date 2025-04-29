@@ -487,7 +487,7 @@ document.addEventListener('click', function (e) {
                 nowBtn.classList.remove('active');
                 overBtn.classList.remove('active');
                 showAllTodos();
-                
+                checkDates();
             }
         }
     }, 0);
