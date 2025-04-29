@@ -78,7 +78,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
     }catch (error){
         console.log(error);
         messageElement.innerText = 'Something went wrong! Please try again later!';
-        messageElement.style.color = '#880808';
+        messageElement.style.color = '#ffcc00';
     }finally{
         userData.file = {};
         incomingMessageDiv.classList.remove('thinking');
