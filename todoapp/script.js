@@ -274,7 +274,7 @@ quoteBtn.addEventListener('click', () => {
         quoteBox.style.display = 'block';
         quoteOverlay.classList.add('active');
         quoteOverlay.style.display = 'block';
-    },250);
+    },200);
         
 })
 
