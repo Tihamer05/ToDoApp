@@ -62,13 +62,13 @@
           <img src="https://img.icons8.com/?size=100&id=HiC7xMlM0VYI&format=png&color=FFFFFF" alt="chatbot icon" />
           <span>Chatbot</span>
         </div>
-        <div class="menu-item" id="remove-all-btn">
-          <img src="https://img.icons8.com/?size=100&id=fxyhG29jgJRt&format=png&color=FFFFFF" alt="remove icon" />
-          <span>Remove All</span>
-        </div>
         <div class="menu-item" id="motivation-btn">
           <img src="https://img.icons8.com/?size=100&id=EMk7McITIeHX&format=png&color=FFFFFF" alt="motivation icon">
           <span>Daily Quote</span>
+        </div>
+        <div class="menu-item" id="remove-all-btn">
+          <img src="https://img.icons8.com/?size=100&id=fxyhG29jgJRt&format=png&color=FFFFFF" alt="remove icon" />
+          <span>Remove All</span>
         </div>
     </div>
 
@@ -82,6 +82,7 @@
             <path d="M0 0h24v24H0z" fill="none"/>
             <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" fill="currentColor"/>
           </svg>
+          <span class="tooltiptext">Upload CSV</span>
         </button>
         
         <input type="file" id="csvFile" accept=".csv" style="display: none;">
@@ -90,6 +91,7 @@
             <path d="M0 0h24v24H0z" fill="none"/>
             <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z" fill="currentColor"/>
           </svg>
+          <span class="tooltiptext">Download CSV</span>
         </button>
     
         <button class="button" id="now">
@@ -99,6 +101,7 @@
             <path d="M12 13h2v2h-2z" fill="#FFC107"/>
             <path d="M19 5H5v3h14V5z" fill="#FFC107"/> 
           </svg>
+          <span class="tooltiptext">Due Today</span>
         </button>
     
       
@@ -109,12 +112,14 @@
             <path d="M12 13h2v2h-2z" fill="red"/>
             <path d="M19 5H5v3h14V5z" fill="red"/>
           </svg>
+          <span class="tooltiptext">Past Due Items</span>
         </button>
 
         <button class="button" id="sort">
           <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
+          <span class="tooltiptext">Sorting Items</span>
         </button>
         
     </div>
@@ -132,24 +137,10 @@
             <input id="todo-input" type="text" 
             placeholder="" autocomplete="off">
             <button id="add-button">Add</button>
+            
         </form>
         <ul id="todo-list">
-            <!-- <li class="todo">
-                <input type="checkbox" id="todo-1">
-                <label class="custom-checkbox" for="todo-1">
-                    <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
-                    </svg>
-                </label>
-                <label for="todo-1" class="todo-text">
-                    Eating
-                </label>
-                <button class="delete-button">
-                    <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                        <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
-                    </svg>
-                </button>
-            </li> -->
+    
         </ul>
     </div>
 
