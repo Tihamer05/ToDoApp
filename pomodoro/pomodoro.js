@@ -36,6 +36,11 @@ themeSwitch.addEventListener('click', () =>{
     darkMode !== 'active' ? enableDarkmode() : disableDarkmode();
 });
 
+const goBackBtn = document.getElementById('go-back');
+goBackBtn.addEventListener('click', () => {
+    window.location.href = '../index.html';
+});
+
 const musicPlayerBtn = document.getElementById('music-appear');
 const songPlayer = document.querySelector('.wrapper');
 const overlay = document.querySelector('.overlay');
