@@ -562,7 +562,11 @@ input[type="checkbox"]{
     .button:hover {
         transform: translateY(-4px);
     }
-    #upload:hover .tooltiptext{
+    
+    
+}
+
+#upload:hover .tooltiptext{
         right: 125%;
         visibility: visible;
         transition: transform 0.8s ease-in-out;
@@ -592,8 +596,6 @@ input[type="checkbox"]{
         transition: transform 0.8s ease-in-out;
 
     }
-    
-}
 
 
 .footer{
