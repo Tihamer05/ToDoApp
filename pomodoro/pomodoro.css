@@ -129,10 +129,12 @@ body {
   align-items: center;
 }
 
-.go-back-button:hover {
-  width: 192px;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+@media (hover: hover) and (pointer: fine){
+    .go-back-button:hover {
+    width: 192px;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
 }
 
 .icon-bg {
