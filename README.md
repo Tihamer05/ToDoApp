@@ -38,11 +38,17 @@ npm install
 npm run dev
 ```
 
-![image](https://github.com/user-attachments/assets/1831d985-fd95-4e05-94ee-a3dded9100cc)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1831d985-fd95-4e05-94ee-a3dded9100cc" alt="App Screenshot" width="400" />
+</p>
 
-![image](https://github.com/user-attachments/assets/cb6586ad-9929-4b37-bf67-6c8aadd1f2fb)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e00fbc3f-f6b4-4843-9dba-025722d49261" alt="App Screenshot" width="400" />
+</p>
 
-![image](https://github.com/user-attachments/assets/e00fbc3f-f6b4-4843-9dba-025722d49261)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cb6586ad-9929-4b37-bf67-6c8aadd1f2fb" alt="App Screenshot" width="400" />
+</p>
 
 
 
