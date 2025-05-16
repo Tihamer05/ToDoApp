@@ -39,7 +39,7 @@ npm run dev
 ```
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/1831d985-fd95-4e05-94ee-a3dded9100cc" alt="App Screenshot" width="400" height="600" />
+  <img src="https://github.com/user-attachments/assets/1831d985-fd95-4e05-94ee-a3dded9100cc" alt="App Screenshot" height="600" />
 </p>
 <br>
 
