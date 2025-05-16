@@ -36,7 +36,7 @@ git clone https://github.com/Tihamer05/ToDoApp.git
 cd ToDoApp
 npm install
 npm run dev
-
+```
 
 ![image](https://github.com/user-attachments/assets/1831d985-fd95-4e05-94ee-a3dded9100cc)
 
