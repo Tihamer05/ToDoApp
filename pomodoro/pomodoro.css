@@ -120,14 +120,14 @@ body {
 
 .cta {
   display: flex;
-  padding: 11px 33px;
+  padding: 8px 25px;
   float: right;
   position: fixed;
   z-index: 5;
   bottom: 20px;
   right: 20px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 15px;
   color: white;
   background: var(--circle-border);
   transition: 1s;
@@ -142,20 +142,12 @@ body {
   outline: none;
 }
 
-.cta:hover {
-  transition: 0.5s;
-  box-shadow: 10px 10px 0 var(--circle-bg);
-}
 
 .cta .second {
   transition: 0.5s;
   margin-right: 0px;
 }
 
-.cta:hover .second {
-  transition: 0.5s;
-  margin-right: 45px;
-}
 
 .span {
   transform: skewX(15deg);
@@ -178,19 +170,6 @@ body {
   transform: translateX(-30%);
 }
 
-.cta:hover .three {
-  animation: color_anim 1s infinite 0.2s;
-}
-
-.cta:hover .one {
-  transform: translateX(0%);
-  animation: color_anim 1s infinite 0.6s;
-}
-
-.cta:hover .two {
-  transform: translateX(0%);
-  animation: color_anim 1s infinite 0.4s;
-}
 
 @keyframes color_anim {
   0% {
@@ -204,6 +183,15 @@ body {
   100% {
     fill: white;
   }
+}
+
+@media only screen and (max-width: 600px){
+    .cta{
+        padding: 5px 10px;
+    }
+    .second{
+        margin-left: 2px;
+    }
 }
 
 
@@ -234,6 +222,36 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     }
+
+    .cta:hover .three {
+    animation: color_anim 1s infinite 0.2s;
+    }
+
+    .cta:hover .one {
+    transform: translateX(0%);
+    animation: color_anim 1s infinite 0.6s;
+    }
+
+    .cta:hover .two {
+    transform: translateX(0%);
+    animation: color_anim 1s infinite 0.4s;
+    }
+
+    .cta:hover {
+    transition: 0.5s;
+    box-shadow: 10px 10px 0 var(--circle-bg);
+
+    .cta:hover .second {
+    transition: 0.5s;
+    margin-right: 45px;
+    }
+
+    .cta{
+        padding: 8px 25px;
+    }
+}
+
+
 }
 
 .icon-bg {
