@@ -19,6 +19,24 @@ let myInterval = null;
 let darkMode = localStorage.getItem('dark-mode');
 const themeSwitch = document.getElementById('theme-switch');
 
+const video = document.getElementById("bgVideo");
+const sources = [
+    "videos/lofi1.mp4",
+    "videos/lofi2.mp4",
+    "videos/lofi3.mp4",
+    "videos/lofi4.mp4",
+    "videos/lofi5.mp4",
+]
+
+let index = -1;
+
+function changeBackground() {
+    index = (index + 1) % sources.length;
+    video.src = sources[index];
+    video.load();
+    video.play();
+}
+
 const enableDarkmode = () =>{
     document.body.classList.add('dark-mode');
     localStorage.setItem('dark-mode', 'active');
