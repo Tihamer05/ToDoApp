@@ -31,10 +31,20 @@ const sources = [
 let index = -1;
 
 function changeBackground() {
-    index = (index + 1) % sources.length;
-    video.src = sources[index];
-    video.load();
-    video.play();
+    video.style.opacity = 0;
+    video.style.filter = "blur(10px) brightness(0.5)";
+    setTimeout(() => {
+        index = (index + 1) % sources.length;
+        video.src = sources[index];
+        video.load();
+
+        video.oncanplay = () => {
+            video.play();
+            video.style.opacity = 1;
+            video.style.filter = "blur(0px) brightness(1)";
+        }
+    }, 600);
+    
 }
 
 const enableDarkmode = () =>{
