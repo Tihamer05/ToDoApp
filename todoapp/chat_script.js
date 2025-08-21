@@ -8,8 +8,7 @@ const fileInput1 = document.querySelector('#file-input1');
 const fileUpploadWrapper = document.querySelector('.file-upload-wrapper');
 const fileCancelButton = document.querySelector('#file-cancel');
 
-const API_KEY = 'AIzaSyBGH_BgY6KuO7tpRI2AIhz4Y642EF6xcUY';
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
 
 const userData = {
     message: null,
@@ -53,21 +52,30 @@ const generateBotResponse = async (incomingMessageDiv) => {
         parts: [{text: userData.message}, ...(userData.file.data ? [{inline_data: userData.file}] : [])]
     });
 
+    // A fetch kérés most a mi proxy végpontunkra mutat
+    const proxyUrl = '/api/proxy';
+
     const requestOptions = {
         method:  'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Content-Type': 'application/json' // Ezt a headert érdemes meghagyni
+        },
         body: JSON.stringify({
+            // A proxy a teljes request body-t várja, amiben a 'contents' van
             contents: chatHistory    
         })
-        
-    }
+    };
 
     try{
-        const response = await fetch(API_URL, requestOptions);
+        const response = await fetch(proxyUrl, requestOptions);
         const data = await response.json();
+
         if(!response.ok){
-            throw new Error(data.error.message);
+            // A hibaüzenetet a proxy válaszából vesszük
+            const errorMessage = data.message || (data.error ? data.error.message : 'Unknown error');
+            throw new Error(errorMessage);
         }
+
         const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g,'$1').trim();
         messageElement.innerText = apiResponseText;
 
@@ -77,7 +85,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
         });
     }catch (error){
         console.log(error);
-        messageElement.innerText = 'Something went wrong! Please try again later!';
+        messageElement.innerText = `Something went wrong! ${error.message}`;
         messageElement.style.color = '#ffcc00';
     }finally{
         userData.file = {};
